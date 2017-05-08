@@ -28,11 +28,14 @@ public class Game_Board_Activity extends AppCompatActivity {
 
         gridView = (GridView) findViewById(R.id.game_board);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        /**ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, numbers);
+        */
+        Game_Cell_Adapter GCadapter = new Game_Cell_Adapter(this, numbers);
 
-        gridView.setAdapter(adapter);
+        gridView.setAdapter(GCadapter);
 
+        /**
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
@@ -40,6 +43,7 @@ public class Game_Board_Activity extends AppCompatActivity {
                         ((TextView) v).getText(), Toast.LENGTH_SHORT).show();
             }
         });
+        */
 
     }
 }
