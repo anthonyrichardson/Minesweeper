@@ -26,7 +26,7 @@ public class WelcomeActivity extends AppCompatActivity {
      * @param view
      */
     public void gotoMinesweeper(View view) {
-        Intent intent = new Intent(this Minesweeper.class);
+        Intent intent = new Intent(this, AboutActivity.class);
         startActivity(intent);
     }
 }
