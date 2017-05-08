@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context="uw.tacoma.edu.minesweeper.Game_Board_Activity"
     android:columnWidth="90dp"
-    android:numColumns="auto_fit"
+    android:numColumns="5"
     android:verticalSpacing="10dp"
     android:horizontalSpacing="10dp"
     android:stretchMode="columnWidth"
