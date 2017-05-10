@@ -2,17 +2,23 @@ package uw.tacoma.edu.minesweeper;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
-import android.widget.TextView;
-import android.widget.Toast;
 
+/**
+ * @author Sopheaktra Danh
+ * @version 1
+ * Game_Board Activity that holds the Minesweeper Game Itself.
+ */
 public class Game_Board_Activity extends AppCompatActivity {
 
+    /**
+     * The GridView used to represent the 5 column Minesweeper Gameboard with A rows.
+     */
     GridView gridView;
 
+    /**
+     * An array used to name each 'Cell' Button int the game board.
+     */
     static final String[] numbers = new String[] {
             "A", "B", "C", "D", "E",
             "F", "G", "H", "I", "J",
@@ -20,6 +26,11 @@ public class Game_Board_Activity extends AppCompatActivity {
             "P", "Q", "R", "S", "T",
             "U", "V", "W", "X", "Y", "Z"};
 
+    /**
+     * Overwrite of OncCreate. Uses the Game_Cell_Adapter to populatre the gridview with
+     * clickable buttons.
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,22 +39,9 @@ public class Game_Board_Activity extends AppCompatActivity {
 
         gridView = (GridView) findViewById(R.id.game_board);
 
-        /**ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, numbers);
-        */
         Game_Cell_Adapter GCadapter = new Game_Cell_Adapter(this, numbers);
 
         gridView.setAdapter(GCadapter);
-
-        /**
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-                Toast.makeText(getApplicationContext(),
-                        ((TextView) v).getText(), Toast.LENGTH_SHORT).show();
-            }
-        });
-        */
 
     }
 }
