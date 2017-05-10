@@ -23,10 +23,24 @@ public class WelcomeActivity extends AppCompatActivity {
     /**
      * Starts the minesweeper game board activity.
      *
-     * @param view
+     * @param view For starting an activity.
      */
-    public void gotoMinesweeper(View view) {
+    public void gotoGameBoard(View view) {
         Intent intent = new Intent(this, AboutActivity.class);
         startActivity(intent);
     }
+
+
+    /**
+     * Starts the minesweeper game board activity.
+     *
+     * @param view For starting an activity.
+     */
+    public void gotoLogin(View view) {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
+
+
+
 }

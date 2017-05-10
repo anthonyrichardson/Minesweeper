@@ -22,6 +22,7 @@
     <Button
         android:id="@+id/login_button"
         android:text="@string/login"
+        android:onClick="gotoLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -34,7 +35,7 @@
     <Button
         android:id="@+id/play_button"
         android:text="@string/play"
-        android:onClick="gotoMinesweeper"
+        android:onClick="gotoGameBoard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
