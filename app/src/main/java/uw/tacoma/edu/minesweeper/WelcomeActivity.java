@@ -26,7 +26,7 @@ public class WelcomeActivity extends AppCompatActivity {
      * @param view For starting an activity.
      */
     public void gotoGameBoard(View view) {
-        Intent intent = new Intent(this, AboutActivity.class);
+        Intent intent = new Intent(this, Game_Board_Activity.class);
         startActivity(intent);
     }
 
