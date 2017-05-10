@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Minesweeper</string>
+    <string name="welcome_screen">WELCOME TO \nMINESWEEPER</string>
+    <string name="login">login</string>
+    <string name="play">play</string>
+    <string name="leaderboards">leaderboards</string>
+    <string name="quit">quit</string>
 </resources>
