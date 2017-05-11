@@ -26,13 +26,13 @@ public class LoginActivity extends AppCompatActivity implements addAccountFragme
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Button addActionButton = (Button) findViewById(R.id.create_account);
-        addActionButton.setOnClickListener(new View.OnClickListener() {
+        Button addAccountButton = (Button) findViewById(R.id.create_account);
+        addAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addAccountFragment courseAddFragment = new addAccountFragment();
+                addAccountFragment accountAddFragment = new addAccountFragment();
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, courseAddFragment)
+                        .replace(R.id.fragment_container, accountAddFragment)
                         .addToBackStack(null)
                         .commit();
             }

@@ -26,5 +26,5 @@
         android:layout_height="wrap_content"
         android:id="@+id/add_account_button"
         android:text="@string/sign_up"
-        android:onClick="add_account"/>
+        android:onClick="addAccount"/>
 </LinearLayout>
