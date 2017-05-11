@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="uw.tacoma.edu.minesweeper">
 
-    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <!-- To auto-complete the email text field in the login form with the account's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -30,9 +30,10 @@
         </activity>
         <activity android:name=".AboutActivity" />
         <activity android:name=".Game_Board_Activity" />
+        <activity android:name=".LoginActivity" />
         <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+            android:name=".sampleLoginActivity"
+            android:label="@string/title_activity_sample_login"></activity>
     </application>
 
 </manifest>
