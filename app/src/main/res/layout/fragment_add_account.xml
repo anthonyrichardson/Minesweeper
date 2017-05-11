@@ -1,0 +1,30 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="uw.tacoma.edu.minesweeper.addAccountFragment">
+
+    <EditText
+        android:id="@+id/username_entry"
+        android:hint="@string/prompt_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_large"
+        />
+
+    <EditText
+        android:id="@+id/password_entry"
+        android:hint="@string/prompt_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_large"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/add_account_button"
+        android:text="@string/sign_up"
+        android:onClick="addAccount"/>
+</LinearLayout>
