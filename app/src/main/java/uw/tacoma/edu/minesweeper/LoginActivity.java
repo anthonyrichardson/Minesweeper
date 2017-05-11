@@ -3,8 +3,8 @@ package uw.tacoma.edu.minesweeper;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -16,84 +16,43 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 
-public class LoginActivity extends AppCompatActivity {
-
-    private final static String ACCOUNT_ADD_URL
-            = "http://cssgate.insttech.washington.edu/~danhs/addAccount.php?";
+public class LoginActivity extends AppCompatActivity implements addAccountFragment.addAccountListener {
 
 
-    private EditText mUsernameEditText;
-    private EditText mPasswordEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        Button addActionButton = (Button) findViewById(R.id.create_account);
+        addActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addAccountFragment courseAddFragment = new addAccountFragment();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, courseAddFragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
     }
 
+    public void login_account(String url){
 
+    }
 
+    public void addAccount(String url){
+        Toast.makeText(getApplicationContext(), url, Toast.LENGTH_LONG).show();
+        //System.out.println(url);
 
-    public void addAccount(String url) {
-        AddAccountTask task = new AddAccountTask();
-        task.execute(new String[]{url.toString()});
-
-// Takes you back to the previous fragment by popping the current fragment out.
+        AddAccountTask addAccountTask = new AddAccountTask();
+        addAccountTask.execute(new String[]{url.toString()});
         getSupportFragmentManager().popBackStackImmediate();
     }
 
-
-
-
-
-
-    private String buildCourseURL(View v) {
-
-        StringBuilder sb = new StringBuilder(ACCOUNT_ADD_URL);
-
-        try {
-
-            String username = mUsernameEditText.getText().toString();
-            sb.append("username=");
-            sb.append(username);
-
-
-            String password = mPasswordEditText.getText().toString();
-            sb.append("&password=");
-            sb.append(password);
-
-
-
-            Log.i("LoginActivity", sb.toString());
-
-        }
-        catch(Exception e) {
-            Toast.makeText(v.getContext(), "Something wrong with the url" + e.getMessage(), Toast.LENGTH_LONG)
-                    .show();
-        }
-        return sb.toString();
-    }
-
-
-
-
-
-
-
-
-
-
     private class AddAccountTask extends AsyncTask<String, Void, String> {
-        private final String mEmail;
-        private final String mPassword;
-
-        AddAccountTask(String email, String password) {
-            mEmail = email;
-            mPassword = password;
-        }
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -103,14 +62,11 @@ public class LoginActivity extends AppCompatActivity {
         protected String doInBackground(String... urls) {
             String response = "";
             HttpURLConnection urlConnection = null;
-            // acquire server connection
             for (String url : urls) {
                 try {
-                    //connect to server
                     URL urlObject = new URL(url);
                     urlConnection = (HttpURLConnection) urlObject.openConnection();
 
-                    //read data from server
                     InputStream content = urlConnection.getInputStream();
 
                     BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
@@ -119,10 +75,8 @@ public class LoginActivity extends AppCompatActivity {
                         response += s;
                     }
 
-
-
                 } catch (Exception e) {
-                    response = "Unable to add account, Reason: "
+                    response = "Unable to add Account, Reason: "
                             + e.getMessage();
                 } finally {
                     if (urlConnection != null)
@@ -131,7 +85,6 @@ public class LoginActivity extends AppCompatActivity {
             }
             return response;
         }
-
 
         /**
          * It checks to see if there was a problem with the URL(Network) which is when an
@@ -163,4 +116,5 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    //
 }

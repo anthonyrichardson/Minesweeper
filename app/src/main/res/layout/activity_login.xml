@@ -5,35 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center_horizontal"
     tools:context="uw.tacoma.edu.minesweeper.LoginActivity">
 
 
-
-
-    <EditText
-        android:id="@+id/username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/prompt_username"/>
-
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/prompt_password"/>
-
     <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/login_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/login"/>
-
+        android:text="@string/action_sign_in_short" />
     <Button
-        android:id="@+id/create_account_button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="addAccount"
-        android:text="@string/create_account"/>
+        android:text="@string/sign_up"
+        android:id="@+id/create_account"/>
+    <include layout="@layout/content_account" />
+
 
 </LinearLayout>
