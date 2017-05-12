@@ -100,6 +100,11 @@ public class LoginFragment extends Fragment {
         public void login(String uri);
     }
 
+    /**
+     * Makes a url to get information from a server.
+     * @param v the view.
+     * @return The url.
+     */
     private String buildLoginURL(View v) {
 
         StringBuilder sb = new StringBuilder(COURSE_ADD_URL);

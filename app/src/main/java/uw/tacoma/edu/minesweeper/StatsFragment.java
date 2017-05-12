@@ -10,6 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.net.URLEncoder;
@@ -31,18 +34,20 @@ public class StatsFragment extends Fragment {
     private final static String STATS_URL = "http://cssgate.insttech.washington.edu/~danhs/login.php?";
     public static final String USERNAME_KEY = "USERNAME";
 
+    // keys for the prefrences that store data globally
+    public static final String GAMES_KEY = "GAMES";
+    public static final String WON_KEY = "WON";
+    public static final String LOST_KEY = "LOST";
 
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private TextView mGames;
+    private TextView mWon;
+    private TextView mLost;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    private StatsListener mListener;
 
     public StatsFragment() {
         // Required empty public constructor
@@ -59,10 +64,7 @@ public class StatsFragment extends Fragment {
     // TODO: Rename and change types and number of parameters
     public static StatsFragment newInstance(String param1, String param2) {
         StatsFragment fragment = new StatsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -70,8 +72,7 @@ public class StatsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
     }
 
@@ -79,25 +80,40 @@ public class StatsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_stats, container, false);
+        View view =  inflater.inflate(R.layout.fragment_stats, container, false);
+
+        mGames = (TextView) view.findViewById(R.id.games);
+        mWon = (TextView) view.findViewById(R.id.won);
+        mLost = (TextView) view.findViewById(R.id.lost);
+
+        mGames.setText(getStatsPrefrences(GAMES_KEY));
+        mWon.setText(getStatsPrefrences(WON_KEY));
+        mLost.setText(getStatsPrefrences(LOST_KEY));
+
+
+
+
+
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+
+        if (context instanceof StatsListener) {
+            mListener = (StatsListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement StatsListener");
         }
+
     }
 
     @Override
@@ -109,7 +125,11 @@ public class StatsFragment extends Fragment {
 
 
 
-
+    /**
+     * Makes a url to get information from a server.
+     * @param v the view.
+     * @return The url.
+     */
     private String buildStatsURL(View v) {
 
         StringBuilder sb = new StringBuilder(STATS_URL);
@@ -121,7 +141,7 @@ public class StatsFragment extends Fragment {
             sb.append(username);
 
 
-            Log.i("AccountAddFragment", sb.toString());
+            Log.i("StatsFragment", sb.toString());
         }
         catch(Exception e) {
             Toast.makeText(v.getContext(), "Something wrong with the url" + e.getMessage(), Toast.LENGTH_LONG)
@@ -132,26 +152,35 @@ public class StatsFragment extends Fragment {
 
 
 
-    // gets username from global map
+    /**
+     * Gets the username from the global Preferences.
+     * @return The username.
+     */
     public String getPrefrences() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         return preferences.getString(USERNAME_KEY, null);
     }
 
 
+    public String getStatsPrefrences(String key) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        /*
+        if(key ==  GAMES_KEY) {
+            return preferences.getString(key, null);
+        } else if(key == WON_KEY) {
+            return preferences.getString(key, null);
+        } else if(key == LOST_KEY) {
+            return preferences.getString(key, null);
+        } else {
+            return "";
+        }
+        */
+        return preferences.getString(key, null);
+    }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
+
+    public interface StatsListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        public void stats(String uri);
     }
 }
