@@ -14,6 +14,11 @@ import android.view.View;
  */
 public class WelcomeActivity extends AppCompatActivity {
 
+    /**
+     * Creates the Activity
+     *
+     * @param savedInstanceState For onCreate
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

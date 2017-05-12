@@ -1,8 +1,10 @@
 package uw.tacoma.edu.minesweeper;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,6 +27,7 @@ import java.net.URLEncoder;
  */
 public class LoginFragment extends Fragment {
 
+    public static final String USERNAME_KEY = "USERNAME";
 
     private loginListener mListener;
 
@@ -112,7 +115,8 @@ public class LoginFragment extends Fragment {
             sb.append(URLEncoder.encode(password, "UTF-8"));
 
             Log.i("AccountAddFragment", sb.toString());
-
+            // stores username in global map
+            setPrefrences();
         }
         catch(Exception e) {
             Toast.makeText(v.getContext(), "Something wrong with the url" + e.getMessage(), Toast.LENGTH_LONG)
@@ -120,5 +124,17 @@ public class LoginFragment extends Fragment {
         }
         return sb.toString();
     }
+
+
+
+    // stores username in global map
+    public void setPrefrences() {
+        String username = mUserNameEditText.getText().toString();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(USERNAME_KEY, username);
+        editor.apply();
+    }
+
 
 }
