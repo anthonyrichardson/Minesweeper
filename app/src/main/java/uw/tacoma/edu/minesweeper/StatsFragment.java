@@ -1,12 +1,18 @@
 package uw.tacoma.edu.minesweeper;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import java.net.URLEncoder;
 
 
 /**
@@ -18,6 +24,15 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class StatsFragment extends Fragment {
+
+
+
+
+    private final static String STATS_URL = "http://cssgate.insttech.washington.edu/~danhs/login.php?";
+    public static final String USERNAME_KEY = "USERNAME";
+
+
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -90,6 +105,40 @@ public class StatsFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+
+
+
+
+    private String buildStatsURL(View v) {
+
+        StringBuilder sb = new StringBuilder(STATS_URL);
+
+        try {
+
+            String username = getPrefrences();
+            sb.append("username=");
+            sb.append(username);
+
+
+            Log.i("AccountAddFragment", sb.toString());
+        }
+        catch(Exception e) {
+            Toast.makeText(v.getContext(), "Something wrong with the url" + e.getMessage(), Toast.LENGTH_LONG)
+                    .show();
+        }
+        return sb.toString();
+    }
+
+
+
+    // gets username from global map
+    public String getPrefrences() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        return preferences.getString(USERNAME_KEY, null);
+    }
+
+
 
     /**
      * This interface must be implemented by activities that contain this
