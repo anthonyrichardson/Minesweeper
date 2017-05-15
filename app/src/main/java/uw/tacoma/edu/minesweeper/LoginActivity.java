@@ -66,9 +66,6 @@ public class LoginActivity extends AppCompatActivity implements addAccountFragme
         });
 
 
-
-
-
     }
 
     /**
@@ -89,7 +86,7 @@ public class LoginActivity extends AppCompatActivity implements addAccountFragme
      *
      * @param url url for the web server.
      */
-    public void addAccount(String url){
+    public void addAccount(String url) {
         Toast.makeText(getApplicationContext(), url, Toast.LENGTH_LONG).show();
         //System.out.println(url);
 
@@ -97,6 +94,57 @@ public class LoginActivity extends AppCompatActivity implements addAccountFragme
         addAccountTask.execute(new String[]{url.toString()});
         getSupportFragmentManager().popBackStackImmediate();
     }
+
+
+
+
+
+    /**
+     * Clears the username from the global Preferences.
+     */
+    public void clearPrefrences() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(USERNAME_KEY, null);
+        editor.apply();
+    }
+
+
+
+    /**
+     * Gets the username from the global Preferences.
+     *
+     * @return The username.
+     */
+    public String getPrefrences() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        return preferences.getString(USERNAME_KEY, null);
+    }
+
+
+    /**
+     * Sets the statistics for the current account.
+     *
+     * @param games Number of games played.
+     * @param won   Number of games won.
+     * @param lost  Number of games lost.
+     */
+    public void setStatsPrefrences(int games, int won, int lost) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(GAMES_KEY, games);
+        editor.putInt(WON_KEY, won);
+        editor.putInt(LOST_KEY, lost);
+        editor.apply();
+
+    }
+
+
+
+
+
+
+
 
 
     /**
@@ -170,50 +218,12 @@ public class LoginActivity extends AppCompatActivity implements addAccountFragme
                 clearPrefrences();
                 Toast.makeText(getApplicationContext(), "Something wrong with the data\n" +
                         e.getMessage(), Toast.LENGTH_LONG).show();
-                Log.d("Login task","Something wrong with the data", e);
+                Log.d("Login task", "Something wrong with the data", e);
             }
         }
     }
 
 
-
-
-    /**
-     * Clears the username from the global Preferences.
-     */
-    public void clearPrefrences() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(USERNAME_KEY, null);
-        editor.apply();
-    }
-
-
-    /**
-     * Gets the username from the global Preferences.
-     * @return The username.
-     */
-    public String getPrefrences() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        return preferences.getString(USERNAME_KEY, null);
-    }
-
-
-    /**
-     * Sets the statistics for the current account.
-     * @param games Number of games played.
-     * @param won Number of games won.
-     * @param lost Number of games lost.
-     */
-    public void setStatsPrefrences(int games, int won, int lost) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt(GAMES_KEY, games);
-        editor.putInt(WON_KEY, won);
-        editor.putInt(LOST_KEY, lost);
-        editor.apply();
-
-    }
 
 
     /**
@@ -283,77 +293,5 @@ public class LoginActivity extends AppCompatActivity implements addAccountFragme
         }
     }
 
-
-
-
-    /**
-     * Sends a query to the server. Gets the statistics for the current account.
-     */
-    private class GetStatsTask extends AsyncTask<String, Void, String> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected String doInBackground(String... urls) {
-            String response = "";
-            HttpURLConnection urlConnection = null;
-            for (String url : urls) {
-                try {
-                    URL urlObject = new URL(url);
-                    urlConnection = (HttpURLConnection) urlObject.openConnection();
-
-                    InputStream content = urlConnection.getInputStream();
-
-                    // read in string representation of stats
-                    // games, won, lost   three integers
-                    BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
-                    String s = "";
-                    while ((s = buffer.readLine()) != null) {
-                        response += s;
-                    }
-
-                } catch (Exception e) {
-                    response = "Unable to get Stats, Reason: "
-                            + e.getMessage();
-                } finally {
-                    if (urlConnection != null)
-                        urlConnection.disconnect();
-                }
-            }
-            return response;
-        }
-
-        /**
-         * It checks to see if there was a problem with the URL(Network) which is when an
-         * exception is caught. It tries to call the parse Method and checks to see if it was successful.
-         * If not, it displays the exception.
-         *
-         * @param result
-         */
-        @Override
-        protected void onPostExecute(String result) {
-            // Something wrong with the network or the URL.
-            try {
-                JSONObject jsonObject = new JSONObject(result);
-                String status = (String) jsonObject.get("result");
-                if (status.equals("success")) {
-                    Toast.makeText(getApplicationContext(), "Account successfully added!"
-                            , Toast.LENGTH_LONG)
-                            .show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Failed to add: "
-                                    + jsonObject.get("error")
-                            , Toast.LENGTH_LONG)
-                            .show();
-                }
-            } catch (JSONException e) {
-                Toast.makeText(getApplicationContext(), "Something wrong with the data" +
-                        e.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-
-    //
 }
+
